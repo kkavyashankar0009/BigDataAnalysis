@@ -1,0 +1,34 @@
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reducer;
+import org.apache.hadoop.mapred.Reporter;
+
+
+public class LogReducer extends MapReduceBase implements Reducer<Text,IntWritable,IntWritable,Text>
+{
+
+ int arr[]= new int[50];
+	int j=0;
+	public void reduce(Text key, Iterator<IntWritable> values,OutputCollector<IntWritable,Text> output, Reporter r) throws IOException {
+
+       while(values.hasNext()){
+       	 IntWritable i=values.next();
+       	 
+       	 arr[j]=i.get();
+       	 j++;}
+       if(i.get()==4){
+       if(j==0){
+    	   
+        output.collect(new IntWritable(arr[0]),key); 
+        }
+        if(i.get()==11){
+            output.collect(new IntWritable(arr[11]),key);
+       }
+	
+	}}
+}
